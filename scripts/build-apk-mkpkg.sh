@@ -14,7 +14,7 @@ SDK_DIR="${SDK_DIR:-$ROOT/build/sdk}"
 APK_TOOL="${APK_TOOL:-$SDK_DIR/staging_dir/host/bin/apk}"
 
 PROJECT_VERSION="${PROJECT_VERSION:-$(git -C "$ROOT" describe --tags --match 'v*' 2>/dev/null | sed 's/^v//')}"
-PROJECT_VERSION="${PROJECT_VERSION:-1.0.0}"
+PROJECT_VERSION="${PROJECT_VERSION:-1.2.1}"
 PKG_RELEASE="${PKG_RELEASE:-1}"
 PKG_VERSION="${PROJECT_VERSION}-r${PKG_RELEASE}"
 
@@ -71,6 +71,9 @@ install -m 0755 "$ROOT/root/etc/uci-defaults/61_luci-mwan6-npt-autostart-sync" \
 install -m 0755 "$ROOT/root/usr/share/luci/mwan6-npt/sync-autostart.sh" \
 	"$STAGE/usr/share/luci/mwan6-npt/"
 
+chmod +x "$ROOT/scripts/stage-docs.sh"
+"$ROOT/scripts/stage-docs.sh" "$STAGE" luci-app-mwan6-npt
+
 POSTINST="$(mktemp)"
 trap 'rm -rf "$STAGE" "$POSTINST"' EXIT
 
@@ -96,7 +99,7 @@ log "Creating $OUT_APK"
 	--info "name:luci-app-mwan6-npt" \
 	--info "version:${PKG_VERSION}" \
 	--info "arch:noarch" \
-	--info "license:GPL-2.0" \
+	--info "license:Apache-2.0" \
 	--info "maintainer:OpenWrt Community" \
 	--info "depends:luci-base mwan6-npt" \
 	--info "description:LuCI web interface for mwan6-npt NPTv6 Multi-WAN" \

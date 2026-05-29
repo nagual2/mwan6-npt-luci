@@ -7,9 +7,12 @@ ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
 
 required="
 	Makefile
+	LICENSE
+	NOTICE
 	README.md
 	README.ru.md
 	README.de.md
+	scripts/stage-docs.sh
 	htdocs/luci-static/resources/view/mwan6-npt/network/config.js
 	htdocs/luci-static/resources/view/mwan6-npt/network/globals.js
 	htdocs/luci-static/resources/view/mwan6-npt/network/interface.js

@@ -8,16 +8,16 @@ Repository: https://github.com/nagual2/mwan6-npt-luci
 
 ## Overview
 
-This package adds a LuCI (JavaScript) admin UI on top of the **mwan6-npt** UCI configuration. You can manage globals, per-interface NPTv6 prefixes, and view or trigger rule updates without editing `/etc/config/mwan6-npt` manually.
+This package adds a LuCI (JavaScript) admin UI on top of the **mwan6-npt** UCI configuration. Manage the LAN NPT source prefix, add WAN tunnels from `network` interfaces, and view or trigger rule updates without editing `/etc/config/mwan6-npt` manually.
 
 ## Features
 
-- **Network → NPTv6 Multi-WAN → Globals** — enable/disable the `mwan6-npt` procd service
-- **Network → NPTv6 Multi-WAN → Interfaces** — edit UCI `interface` sections (`enabled`, `wan_prefix`, `default`)
-- **Status → NPTv6 Multi-WAN** — live `mwan6-npt status`, buttons for update/flush/refresh
+- **Network → NPTv6 Multi-WAN** — service toggle, LAN prefix (NPT source), WAN table
+- **LAN prefix** — detect from `network` via `detect-lan-prefix.sh`
+- **WAN interfaces** — dropdown from `network` (excludes `lan` and already configured), optional prefix field before add, `detect-wan-prefix.sh` suggestion
+- **Status → NPTv6 Multi-WAN** — live `mwan6-npt status`, update/flush/refresh buttons
 - **Save & Apply** runs `/etc/init.d/mwan6-npt reload` after UCI changes
-- Prefix validation in the web form (same pattern as the CLI helper)
-- Ensures only one interface is marked as LAN/source (`default=1`)
+- Prefix validation in the web form; `lan` always `default=1` (LAN source flag hidden in UI)
 
 ## Requirements
 
@@ -34,7 +34,7 @@ Install **mwan6-npt** first, then this LuCI package:
 
 ```bash
 cd /tmp
-wget https://github.com/nagual2/mwan6-npt-luci/releases/download/v1.0.0/luci-app-mwan6-npt-1.0.0-r1.apk
+wget https://github.com/nagual2/mwan6-npt-luci/releases/download/v1.2.1/luci-app-mwan6-npt-1.2.1-r1.apk
 apk add --allow-untrusted ./luci-app-mwan6-npt-*.apk
 /etc/init.d/rpcd restart
 /etc/init.d/uhttpd restart
@@ -45,7 +45,7 @@ Optional Russian UI: build with OpenWrt SDK and `CONFIG_LUCI_LANG_ru=y`, or use 
 ### OpenWrt 23.x (`opkg` / `.ipk`)
 
 ```bash
-opkg install /tmp/luci-app-mwan6-npt_1.0.0-1_all.ipk
+opkg install /tmp/luci-app-mwan6-npt_1.2.1-1_all.ipk
 /etc/init.d/rpcd restart
 /etc/init.d/uhttpd restart
 ```
@@ -109,6 +109,10 @@ The LuCI forms edit the same UCI file as the CLI. See [mwan6-npt documentation](
 
 On first install, `root/etc/uci-defaults/60_luci-mwan6-npt` creates the `globals` section if it is missing.
 
+## Documentation
+
+Trilingual README files ship in `/usr/share/doc/luci-app-mwan6-npt/` (`README.en.md`, `README.ru.md`, `README.de.md`).
+
 ## License
 
-GPL-2.0
+Apache-2.0 (same license as [LuCI](https://github.com/openwrt/luci)). See `LICENSE` and `NOTICE`.

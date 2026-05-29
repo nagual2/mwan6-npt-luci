@@ -12,12 +12,12 @@ Dieses Paket ergänzt **mwan6-npt** um eine LuCI-Administration (JavaScript). Gl
 
 ## Funktionen
 
-- **Netzwerk → NPTv6 Multi-WAN → Globals** — procd-Dienst `mwan6-npt` ein-/ausschalten
-- **Netzwerk → NPTv6 Multi-WAN → Interfaces** — UCI-`interface`-Abschnitte (`enabled`, `wan_prefix`, `default`)
-- **Status → NPTv6 Multi-WAN** — Live-Ausgabe von `mwan6-npt status`, Schaltflächen Update/Flush/Refresh
-- **Speichern & Anwenden** führt nach UCI-Änderungen `/etc/init.d/mwan6-npt reload` aus
-- Präfixvalidierung im Formular (gleiches Muster wie in der CLI)
-- Stellt sicher, dass nur eine Schnittstelle als LAN/Quelle (`default=1`) markiert ist
+- **Netzwerk → NPTv6 Multi-WAN** — Dienst, LAN-Präfix, WAN-Tabelle
+- **LAN-Präfix** — Erkennung aus `network` (`detect-lan-prefix.sh`)
+- **WAN-Schnittstellen** — Dropdown aus `network`, Präfixfeld vor dem Hinzufügen, Vorschlag via `detect-wan-prefix.sh`
+- **Status → NPTv6 Multi-WAN** — Live-Ausgabe, Update/Flush/Refresh
+- **Speichern & Anwenden** — `/etc/init.d/mwan6-npt reload`
+- `lan` ist immer `default=1`; LAN-Quellen-Flag in der UI ausgeblendet
 
 ## Voraussetzungen
 
@@ -34,7 +34,7 @@ Zuerst **mwan6-npt** installieren, dann dieses LuCI-Paket:
 
 ```bash
 cd /tmp
-wget https://github.com/nagual2/mwan6-npt-luci/releases/download/v1.0.0/luci-app-mwan6-npt-1.0.0-r1.apk
+wget https://github.com/nagual2/mwan6-npt-luci/releases/download/v1.2.1/luci-app-mwan6-npt-1.2.1-r1.apk
 apk add --allow-untrusted ./luci-app-mwan6-npt-*.apk
 /etc/init.d/rpcd restart
 /etc/init.d/uhttpd restart
@@ -45,7 +45,7 @@ Optional Russisch: Build mit OpenWrt SDK und `CONFIG_LUCI_LANG_ru=y`.
 ### OpenWrt 23.x (`opkg` / `.ipk`)
 
 ```bash
-opkg install /tmp/luci-app-mwan6-npt_1.0.0-1_all.ipk
+opkg install /tmp/luci-app-mwan6-npt_1.2.1-1_all.ipk
 /etc/init.d/rpcd restart
 /etc/init.d/uhttpd restart
 ```
@@ -94,6 +94,10 @@ Inhalt von `htdocs/` und `root/` kopieren, `rpcd` und `uhttpd` neu starten.
 
 Siehe [mwan6-npt-Dokumentation](https://github.com/nagual2/mwan6-npt): `globals.enabled`, Abschnittsname = Schnittstellenname, ein `default=1`.
 
+## Dokumentation
+
+Dreisprachige README unter `/usr/share/doc/luci-app-mwan6-npt/` (`README.en.md`, `README.ru.md`, `README.de.md`).
+
 ## Lizenz
 
-GPL-2.0
+Apache-2.0 (wie [LuCI](https://github.com/openwrt/luci)). Siehe `LICENSE` und `NOTICE`.

@@ -12,14 +12,12 @@
 
 ## Возможности
 
-- **Сеть → NPTv6 Multi-WAN → Общие** — включение procd-сервиса `mwan6-npt`
-- **Сеть → NPTv6 Multi-WAN → Интерфейсы** — LAN-префикс (источник NPT) и добавление WAN-туннелей через выпадающий список
-- **Статус → NPTv6 Multi-WAN** — вывод `mwan6-npt status`, кнопки обновления, сброса и refresh
-- **Сохранить и применить** вызывает `/etc/init.d/mwan6-npt reload`
-
-При установке **mwan6-npt** в UCI только секция `lan`; WAN добавляются вручную через LuCI. Префиксы WAN **не записываются** в `network` — только в `mwan6-npt` для NPT.
-- Валидация префикса в форме (тот же формат, что в CLI)
-- Автоматически оставляет только один интерфейс с `default=1` (источник LAN)
+- **Сеть → NPTv6 Multi-WAN** — сервис, LAN-префикс, таблица WAN
+- **LAN-префикс** — определение из `network` (`detect-lan-prefix.sh`)
+- **WAN-интерфейсы** — выпадающий список из `network`, поле префикса перед добавлением, подсказка `detect-wan-prefix.sh`
+- **Статус → NPTv6 Multi-WAN** — `mwan6-npt status`, кнопки обновления/сброса
+- **Сохранить и применить** — `/etc/init.d/mwan6-npt reload`
+- `lan` всегда `default=1`; флаг «Источник LAN» скрыт в UI
 
 ## Требования
 
@@ -36,7 +34,7 @@
 
 ```bash
 cd /tmp
-wget https://github.com/nagual2/mwan6-npt-luci/releases/download/v1.0.0/luci-app-mwan6-npt-1.0.0-r1.apk
+wget https://github.com/nagual2/mwan6-npt-luci/releases/download/v1.2.1/luci-app-mwan6-npt-1.2.1-r1.apk
 apk add --allow-untrusted ./luci-app-mwan6-npt-*.apk
 /etc/init.d/rpcd restart
 /etc/init.d/uhttpd restart
@@ -47,7 +45,7 @@ apk add --allow-untrusted ./luci-app-mwan6-npt-*.apk
 ### OpenWrt 23.x (`opkg` / `.ipk`)
 
 ```bash
-opkg install /tmp/luci-app-mwan6-npt_1.0.0-1_all.ipk
+opkg install /tmp/luci-app-mwan6-npt_1.2.1-1_all.ipk
 /etc/init.d/rpcd restart
 /etc/init.d/uhttpd restart
 ```
@@ -96,6 +94,10 @@ ls dist/
 
 См. [документацию mwan6-npt](https://github.com/nagual2/mwan6-npt): `globals.enabled`, имя секции = имя интерфейса, один `default=1`.
 
+## Документация
+
+Триязычные README: `/usr/share/doc/luci-app-mwan6-npt/` (`README.en.md`, `README.ru.md`, `README.de.md`).
+
 ## Лицензия
 
-GPL-2.0
+Apache-2.0 (как у [LuCI](https://github.com/openwrt/luci)). См. `LICENSE` и `NOTICE`.
