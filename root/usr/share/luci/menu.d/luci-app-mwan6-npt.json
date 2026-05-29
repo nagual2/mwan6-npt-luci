@@ -3,7 +3,8 @@
 		"title": "NPTv6 Multi-WAN",
 		"order": 55,
 		"action": {
-			"type": "firstchild"
+			"type": "view",
+			"path": "mwan6-npt/network/config"
 		},
 		"depends": {
 			"acl": [
@@ -12,22 +13,6 @@
 			"uci": {
 				"mwan6-npt": true
 			}
-		}
-	},
-	"admin/network/mwan6-npt/globals": {
-		"title": "Globals",
-		"order": 10,
-		"action": {
-			"type": "view",
-			"path": "mwan6-npt/network/globals"
-		}
-	},
-	"admin/network/mwan6-npt/interface": {
-		"title": "Interfaces",
-		"order": 20,
-		"action": {
-			"type": "view",
-			"path": "mwan6-npt/network/interface"
 		}
 	},
 	"admin/status/mwan6-npt": {

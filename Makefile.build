@@ -28,12 +28,15 @@ test:
 
 ipk: $(IPK_PATH)
 
-$(IPK_PATH): htdocs/luci-static/resources/view/mwan6-npt/network/globals.js \
+$(IPK_PATH): htdocs/luci-static/resources/view/mwan6-npt/network/config.js \
+	htdocs/luci-static/resources/view/mwan6-npt/network/globals.js \
 	htdocs/luci-static/resources/view/mwan6-npt/network/interface.js \
 	htdocs/luci-static/resources/view/mwan6-npt/status/overview.js \
 	root/usr/share/luci/menu.d/luci-app-mwan6-npt.json \
 	root/usr/share/rpcd/acl.d/luci-app-mwan6-npt.json \
-	root/etc/uci-defaults/60_luci-mwan6-npt
+	root/etc/uci-defaults/60_luci-mwan6-npt \
+	root/etc/uci-defaults/61_luci-mwan6-npt-autostart-sync \
+	root/usr/share/luci/mwan6-npt/sync-autostart.sh
 > @echo "Building IPK $(PKG_NAME) $(PKG_VERSION)-$(PKG_RELEASE)..."
 > rm -rf $(WORK_DIR)
 > mkdir -p $(DATA_DIR)/www/luci-static/resources/view/mwan6-npt/network
@@ -46,6 +49,9 @@ $(IPK_PATH): htdocs/luci-static/resources/view/mwan6-npt/network/globals.js \
 > install -m 0644 root/usr/share/luci/menu.d/luci-app-mwan6-npt.json $(DATA_DIR)/usr/share/luci/menu.d/
 > install -m 0644 root/usr/share/rpcd/acl.d/luci-app-mwan6-npt.json $(DATA_DIR)/usr/share/rpcd/acl.d/
 > install -m 0755 root/etc/uci-defaults/60_luci-mwan6-npt $(DATA_DIR)/etc/uci-defaults/
+> install -m 0755 root/etc/uci-defaults/61_luci-mwan6-npt-autostart-sync $(DATA_DIR)/etc/uci-defaults/
+> mkdir -p $(DATA_DIR)/usr/share/luci/mwan6-npt
+> install -m 0755 root/usr/share/luci/mwan6-npt/sync-autostart.sh $(DATA_DIR)/usr/share/luci/mwan6-npt/
 > mkdir -p $(CONTROL_DIR)
 > printf 'Package: %s\n' $(PKG_NAME) > $(CONTROL_DIR)/control
 > printf 'Version: %s-%s\n' $(PKG_VERSION) $(PKG_RELEASE) >> $(CONTROL_DIR)/control

@@ -54,6 +54,7 @@ install -d "$STAGE/www/luci-static/resources/view/mwan6-npt/status"
 install -d "$STAGE/usr/share/luci/menu.d"
 install -d "$STAGE/usr/share/rpcd/acl.d"
 install -d "$STAGE/etc/uci-defaults"
+install -d "$STAGE/usr/share/luci/mwan6-npt"
 
 install -m 0644 "$ROOT/htdocs/luci-static/resources/view/mwan6-npt/network/"*.js \
 	"$STAGE/www/luci-static/resources/view/mwan6-npt/network/"
@@ -65,6 +66,10 @@ install -m 0644 "$ROOT/root/usr/share/rpcd/acl.d/luci-app-mwan6-npt.json" \
 	"$STAGE/usr/share/rpcd/acl.d/"
 install -m 0755 "$ROOT/root/etc/uci-defaults/60_luci-mwan6-npt" \
 	"$STAGE/etc/uci-defaults/"
+install -m 0755 "$ROOT/root/etc/uci-defaults/61_luci-mwan6-npt-autostart-sync" \
+	"$STAGE/etc/uci-defaults/"
+install -m 0755 "$ROOT/root/usr/share/luci/mwan6-npt/sync-autostart.sh" \
+	"$STAGE/usr/share/luci/mwan6-npt/"
 
 POSTINST="$(mktemp)"
 trap 'rm -rf "$STAGE" "$POSTINST"' EXIT
@@ -73,6 +78,7 @@ cat >"$POSTINST" <<'EOF'
 #!/bin/sh
 [ -n "${IPKG_INSTROOT}" ] && exit 0
 [ -x /etc/uci-defaults/60_luci-mwan6-npt ] && /etc/uci-defaults/60_luci-mwan6-npt
+[ -x /etc/uci-defaults/61_luci-mwan6-npt-autostart-sync ] && /etc/uci-defaults/61_luci-mwan6-npt-autostart-sync
 rm -f /tmp/luci-indexcache.*
 rm -rf /tmp/luci-modulecache/
 /etc/init.d/rpcd reload 2>/dev/null

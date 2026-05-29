@@ -10,6 +10,7 @@ required="
 	README.md
 	README.ru.md
 	README.de.md
+	htdocs/luci-static/resources/view/mwan6-npt/network/config.js
 	htdocs/luci-static/resources/view/mwan6-npt/network/globals.js
 	htdocs/luci-static/resources/view/mwan6-npt/network/interface.js
 	htdocs/luci-static/resources/view/mwan6-npt/status/overview.js

@@ -35,6 +35,15 @@
 				"exec"
 			],
 			"file": {
+				"/etc/rc.d/S99mwan6-npt": [
+					"read"
+				],
+				"/usr/share/luci/mwan6-npt/sync-autostart.sh": [
+					"exec"
+				],
+				"/etc/init.d/mwan6-npt status": [
+					"exec"
+				],
 				"/usr/sbin/mwan6-npt status": [
 					"exec"
 				]
@@ -50,6 +59,12 @@
 			],
 			"file": {
 				"/etc/init.d/mwan6-npt reload": [
+					"exec"
+				],
+				"/etc/init.d/mwan6-npt start": [
+					"exec"
+				],
+				"/etc/init.d/mwan6-npt stop": [
 					"exec"
 				],
 				"/usr/sbin/mwan6-npt update": [
