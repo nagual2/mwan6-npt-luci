@@ -36,6 +36,16 @@ grep -q 'luci-app-mwan6-npt' "$ROOT/root/usr/share/rpcd/acl.d/luci-app-mwan6-npt
 	missing=1
 }
 
+grep -q 'renderSectionAdd' "$ROOT/htdocs/luci-static/resources/view/mwan6-npt/network/config.js" || {
+	echo "config.js: expected WAN interface add UI"
+	missing=1
+}
+
+grep -q "NamedSection, 'lan'" "$ROOT/htdocs/luci-static/resources/view/mwan6-npt/network/config.js" || {
+	echo "config.js: expected dedicated LAN section"
+	missing=1
+}
+
 if [ "$missing" -ne 0 ]; then
 	exit 1
 fi

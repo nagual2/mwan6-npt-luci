@@ -1,15 +1,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-app-mwan6-npt\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://github.com/nagual2/mwan6-npt-luci/issues\n"
 "POT-Creation-Date: 2025-01-01 00:00+0000\n"
-"PO-Revision-Date: 2025-05-29 12:00+0300\n"
+"PO-Revision-Date: 2026-05-30 12:00+0300\n"
 "Last-Translator: OpenWrt Community\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "NPTv6 Multi-WAN"
 msgstr "NPTv6 Multi-WAN"
@@ -29,17 +30,107 @@ msgstr "NPTv6 Multi-WAN — Интерфейсы"
 msgid "NPTv6 Multi-WAN — Status"
 msgstr "NPTv6 Multi-WAN — Статус"
 
+msgid "unknown"
+msgstr "неизвестно"
+
+msgid "Service"
+msgstr "Сервис"
+
+msgid "idle (rules applied)"
+msgstr "ожидание (правила применены)"
+
+msgid "Rules: active (%d SNAT)"
+msgstr "Правила: активны (%d SNAT)"
+
+msgid "Rules: none"
+msgstr "Правила: нет"
+
+msgid "IPv6 prefix is required"
+msgstr "Требуется IPv6-префикс"
+
+msgid "Invalid prefix (example: 2001:db8::/56 or fd00:1111::/64)"
+msgstr "Неверный префикс (пример: 2001:db8::/56 или fd00:1111::/64)"
+
+msgid "Configure NPTv6 prefix translation. The LAN prefix is the single source prefix for clients; WAN entries only define outbound translation targets and are not written to network/ip6prefix. Enable the service after adding WAN tunnels."
+msgstr "Настройка NPTv6. LAN-префикс — единственный источник для клиентов; записи WAN задают только цели трансляции и не пишутся в network/ip6prefix. Включите сервис после добавления WAN-туннелей."
+
+msgid "Runtime status"
+msgstr "Состояние в runtime"
+
+msgid "Procd service state and whether NPTv6 nftables rules are currently installed."
+msgstr "Состояние procd-сервиса и установлены ли сейчас правила NPTv6 в nftables."
+
 msgid "Enable mwan6-npt service"
 msgstr "Включить сервис mwan6-npt"
 
-msgid "NPT interfaces"
-msgstr "Интерфейсы NPT"
+msgid "When enabled, procd starts the service on boot and applies rules after reload."
+msgstr "При включении procd запускает сервис при загрузке и применяет правила после reload."
 
-msgid "LAN source (default)"
-msgstr "Источник LAN (по умолчанию)"
+msgid "LAN prefix (NPT source)"
+msgstr "LAN-префикс (источник NPT)"
 
-msgid "WAN / LAN prefix"
-msgstr "Префикс WAN / LAN"
+msgid "Prefix used for NPTv6 translation only. Configure PD/RA for clients in Network → Interfaces (single ip6prefix in the system)."
+msgstr "Используется только для NPTv6. PD/RA для клиентов настраиваются в Сеть → Интерфейсы (один ip6prefix в системе)."
+
+msgid "LAN prefix"
+msgstr "LAN-префикс"
+
+msgid "IPv6 prefix of LAN clients (NPT source). Must match the delegated prefix on the LAN."
+msgstr "IPv6-префикс клиентов LAN (источник NPT). Должен совпадать с делегированным префиксом на LAN."
+
+msgid "Detect from network"
+msgstr "Определить из network"
+
+msgid "Detected LAN prefix: %h"
+msgstr "Определён LAN-префикс: %h"
+
+msgid "Could not detect LAN prefix from network configuration"
+msgstr "Не удалось определить LAN-префикс из конфигурации network"
+
+msgid "WAN interfaces (NPT targets)"
+msgstr "WAN-интерфейсы (цели NPT)"
+
+msgid "Add tunnels from Network → Interfaces. Prefixes here are used for NPT only and are not written to network configuration."
+msgstr "Добавляйте туннели из Сеть → Интерфейсы. Префиксы здесь только для NPT и не записываются в network."
+
+msgid "No WAN interfaces configured. Add a tunnel below."
+msgstr "WAN-интерфейсы не настроены. Добавьте туннель ниже."
+
+msgid "No available network interfaces to add."
+msgstr "Нет доступных сетевых интерфейсов для добавления."
+
+msgid "Interface"
+msgstr "Интерфейс"
+
+msgid "Add WAN interface"
+msgstr "Добавить WAN-интерфейс"
+
+msgid "WAN NPT prefix"
+msgstr "WAN-префикс NPT"
+
+msgid "Target prefix for NPTv6 on this tunnel. Used for translation only — not written to network configuration."
+msgstr "Целевой префикс NPTv6 на этом туннеле. Только для трансляции — не записывается в network."
+
+msgid "Enabled"
+msgstr "Включено"
+
+msgid "Include this interface in NPTv6 rule generation."
+msgstr "Включить интерфейс в генерацию правил NPTv6."
+
+msgid "Suggest from interface"
+msgstr "Подсказать с интерфейса"
+
+msgid "No global IPv6 address found on this interface"
+msgstr "На интерфейсе не найден глобальный IPv6-адрес"
+
+msgid "NPTv6 rules reloaded."
+msgstr "Правила NPTv6 перезагружены."
+
+msgid "mwan6-npt status failed"
+msgstr "ошибка mwan6-npt status"
+
+msgid "Live output from mwan6-npt. Use the buttons to regenerate or clear nftables hook files."
+msgstr "Вывод mwan6-npt в реальном времени. Кнопки — пересоздать или очистить hook-файлы nftables."
 
 msgid "Update rules"
 msgstr "Обновить правила"
@@ -50,5 +141,17 @@ msgstr "Сбросить правила"
 msgid "Refresh"
 msgstr "Обновить"
 
-msgid "NPTv6 rules reloaded."
-msgstr "Правила NPTv6 перезагружены."
+msgid "Status refreshed."
+msgstr "Статус обновлён."
+
+msgid "Update failed"
+msgstr "Ошибка обновления"
+
+msgid "Rules updated and firewall reloaded."
+msgstr "Правила обновлены, firewall перезагружен."
+
+msgid "Flush failed"
+msgstr "Ошибка сброса"
+
+msgid "Rules flushed."
+msgstr "Правила сброшены."

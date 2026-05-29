@@ -13,9 +13,11 @@
 ## Возможности
 
 - **Сеть → NPTv6 Multi-WAN → Общие** — включение procd-сервиса `mwan6-npt`
-- **Сеть → NPTv6 Multi-WAN → Интерфейсы** — секции UCI `interface` (`enabled`, `wan_prefix`, `default`)
+- **Сеть → NPTv6 Multi-WAN → Интерфейсы** — LAN-префикс (источник NPT) и добавление WAN-туннелей через выпадающий список
 - **Статус → NPTv6 Multi-WAN** — вывод `mwan6-npt status`, кнопки обновления, сброса и refresh
 - **Сохранить и применить** вызывает `/etc/init.d/mwan6-npt reload`
+
+При установке **mwan6-npt** в UCI только секция `lan`; WAN добавляются вручную через LuCI. Префиксы WAN **не записываются** в `network` — только в `mwan6-npt` для NPT.
 - Валидация префикса в форме (тот же формат, что в CLI)
 - Автоматически оставляет только один интерфейс с `default=1` (источник LAN)
 
@@ -40,7 +42,7 @@ apk add --allow-untrusted ./luci-app-mwan6-npt-*.apk
 /etc/init.d/uhttpd restart
 ```
 
-Русский UI (опционально): соберите через OpenWrt SDK с `CONFIG_LUCI_LANG_ru=y`; в standalone `.apk` строки меню на английском.
+Русский UI: установите пакет **[luci-i18n-mwan6-npt-ru](https://github.com/nagual2/luci-i18n-mwan6-npt-ru)** (отдельный репозиторий) или соберите через OpenWrt SDK с `CONFIG_LUCI_LANG_ru=y`. В standalone `.apk` приложения без i18n-пакета строки меню на английском.
 
 ### OpenWrt 23.x (`opkg` / `.ipk`)
 

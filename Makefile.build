@@ -4,7 +4,7 @@ SHELL := /bin/sh
 PKG_NAME := luci-app-mwan6-npt
 PROJECT_VERSION ?=
 GIT_TAG := $(strip $(shell git describe --tags --match 'v*' --abbrev=0 2>/dev/null || true))
-PKG_VERSION := $(strip $(if $(PROJECT_VERSION),$(PROJECT_VERSION),$(if $(GIT_TAG),$(patsubst v%,%,$(GIT_TAG)),1.0.0)))
+PKG_VERSION := $(strip $(if $(PROJECT_VERSION),$(PROJECT_VERSION),$(if $(GIT_TAG),$(patsubst v%,%,$(GIT_TAG)),1.2.0)))
 PKG_RELEASE ?= 1
 
 OUTPUT_DIR ?= dist

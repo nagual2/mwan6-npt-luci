@@ -9,7 +9,7 @@ LUCI_TITLE:=LuCI support for mwan6-npt (NPTv6 Multi-WAN)
 LUCI_DEPENDS:=+luci-base +mwan6-npt
 PKG_LICENSE:=GPL-2.0
 PKG_MAINTAINER:=OpenWrt Community
-PKG_VERSION?=1.0.0
+PKG_VERSION?=1.2.0
 PKG_RELEASE?=1
 
 # When this package lives outside the luci feed tree, set LUCI_DIR, e.g.:
