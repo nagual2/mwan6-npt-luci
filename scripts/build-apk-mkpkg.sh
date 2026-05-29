@@ -92,8 +92,7 @@ log "Creating $OUT_APK"
 	--info "arch:noarch" \
 	--info "license:GPL-2.0" \
 	--info "maintainer:OpenWrt Community" \
-	--info "depends:luci-base" \
-	--info "depends:mwan6-npt" \
+	--info "depends:luci-base mwan6-npt" \
 	--info "description:LuCI web interface for mwan6-npt NPTv6 Multi-WAN" \
 	--script "post-install:$POSTINST" \
 	--output "$OUT_APK"
