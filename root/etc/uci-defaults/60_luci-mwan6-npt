@@ -1,0 +1,12 @@
+#!/bin/sh
+# Ensure globals section exists for LuCI configuration page.
+
+[ -f /etc/config/mwan6-npt ] || exit 0
+
+uci -q get mwan6-npt.globals >/dev/null 2>&1 || {
+	uci set mwan6-npt.globals='globals'
+	uci set mwan6-npt.globals.enabled='0'
+	uci commit mwan6-npt
+}
+
+exit 0

@@ -1,0 +1,54 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-app-mwan6-npt\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-05-29 12:00+0300\n"
+"Last-Translator: OpenWrt Community\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "NPTv6 Multi-WAN"
+msgstr "NPTv6 Multi-WAN"
+
+msgid "Globals"
+msgstr "Общие"
+
+msgid "Interfaces"
+msgstr "Интерфейсы"
+
+msgid "NPTv6 Multi-WAN — Globals"
+msgstr "NPTv6 Multi-WAN — Общие"
+
+msgid "NPTv6 Multi-WAN — Interfaces"
+msgstr "NPTv6 Multi-WAN — Интерфейсы"
+
+msgid "NPTv6 Multi-WAN — Status"
+msgstr "NPTv6 Multi-WAN — Статус"
+
+msgid "Enable mwan6-npt service"
+msgstr "Включить сервис mwan6-npt"
+
+msgid "NPT interfaces"
+msgstr "Интерфейсы NPT"
+
+msgid "LAN source (default)"
+msgstr "Источник LAN (по умолчанию)"
+
+msgid "WAN / LAN prefix"
+msgstr "Префикс WAN / LAN"
+
+msgid "Update rules"
+msgstr "Обновить правила"
+
+msgid "Flush rules"
+msgstr "Сбросить правила"
+
+msgid "Refresh"
+msgstr "Обновить"
+
+msgid "NPTv6 rules reloaded."
+msgstr "Правила NPTv6 перезагружены."

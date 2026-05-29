@@ -1,0 +1,67 @@
+{
+	"luci-app-mwan6-npt-status": {
+		"description": "Grant read access to mwan6-npt status",
+		"read": {
+			"cgi-io": [
+				"exec"
+			],
+			"file": {
+				"/usr/sbin/mwan6-npt status": [
+					"exec"
+				]
+			},
+			"uci": [
+				"mwan6-npt"
+			]
+		},
+		"write": {
+			"cgi-io": [
+				"exec"
+			],
+			"file": {
+				"/usr/sbin/mwan6-npt update": [
+					"exec"
+				],
+				"/usr/sbin/mwan6-npt flush": [
+					"exec"
+				]
+			}
+		}
+	},
+	"luci-app-mwan6-npt": {
+		"description": "Grant UCI access for luci-app-mwan6-npt",
+		"read": {
+			"cgi-io": [
+				"exec"
+			],
+			"file": {
+				"/usr/sbin/mwan6-npt status": [
+					"exec"
+				]
+			},
+			"uci": [
+				"mwan6-npt",
+				"network"
+			]
+		},
+		"write": {
+			"cgi-io": [
+				"exec"
+			],
+			"file": {
+				"/etc/init.d/mwan6-npt reload": [
+					"exec"
+				],
+				"/usr/sbin/mwan6-npt update": [
+					"exec"
+				],
+				"/usr/sbin/mwan6-npt flush": [
+					"exec"
+				]
+			},
+			"uci": [
+				"mwan6-npt"
+			]
+		}
+	}
+}
