@@ -24,6 +24,55 @@ This package adds a LuCI (JavaScript) admin UI on top of the **mwan6-npt** UCI c
 - OpenWrt 22.03+ with LuCI (js, `luci-base`)
 - Installed package **[mwan6-npt](https://github.com/nagual2/mwan6-npt)**
 
+## Install from release
+
+Download assets from [GitHub Releases](https://github.com/nagual2/mwan6-npt-luci/releases).
+
+### OpenWrt 25.12 and newer (`apk`)
+
+Install **mwan6-npt** first, then this LuCI package:
+
+```bash
+cd /tmp
+wget https://github.com/nagual2/mwan6-npt-luci/releases/download/v1.0.0/luci-app-mwan6-npt-1.0.0-r1.apk
+apk add --allow-untrusted ./luci-app-mwan6-npt-*.apk
+/etc/init.d/rpcd restart
+/etc/init.d/uhttpd restart
+```
+
+Optional Russian UI: build with OpenWrt SDK and `CONFIG_LUCI_LANG_ru=y`, or use English menu strings from `po/ru/`.
+
+### OpenWrt 23.x (`opkg` / `.ipk`)
+
+```bash
+opkg install /tmp/luci-app-mwan6-npt_1.0.0-1_all.ipk
+/etc/init.d/rpcd restart
+/etc/init.d/uhttpd restart
+```
+
+### OpenWrt 25.x fallback (tarball from IPK)
+
+On the build host:
+
+```bash
+make -f Makefile.build ipk
+./scripts/install-tarball.sh 192.168.1.1
+```
+
+Open **Network → NPTv6 Multi-WAN** in the admin UI.
+
+## Build standalone packages
+
+```bash
+# opkg IPK (all architectures)
+make -f Makefile.build ipk PROJECT_VERSION=1.0.0
+
+# apk for OpenWrt 25.12+ (uses OpenWrt apk mkpkg; SDK host tools downloaded once)
+chmod +x scripts/build-apk-mkpkg.sh
+./scripts/build-apk-mkpkg.sh
+ls dist/
+```
+
 ## Build (OpenWrt SDK / image builder)
 
 1. Add this tree to your build, e.g. symlink into the LuCI feed:
@@ -46,26 +95,9 @@ If the LuCI feed is not under `feeds/luci`, pass `LUCI_DIR`:
 make package/luci-app-mwan6-npt/compile LUCI_DIR=/path/to/luci V=s
 ```
 
-## Install on a running router
-
-```bash
-opkg install luci-app-mwan6-npt_*.ipk
-# or on OpenWrt 24+ with apk:
-apk add luci-app-mwan6-npt
-```
-
-Reload LuCI (or clear rpcd cache):
-
-```bash
-/etc/init.d/rpcd restart
-/etc/init.d/uhttpd restart
-```
-
-Open **Network → NPTv6 Multi-WAN** in the admin UI.
-
 ## Manual install (development)
 
-Copy `htdocs/` and `root/` files into the running system (paths match the OpenWrt package layout), then restart `rpcd` and `uhttpd` as above.
+Copy `htdocs/` and `root/` files into the running system (paths match the OpenWrt package layout), then restart `rpcd` and `uhttpd`.
 
 ## UCI mapping
 

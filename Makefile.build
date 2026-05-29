@@ -1,0 +1,69 @@
+SHELL := /bin/sh
+.RECIPEPREFIX := >
+
+PKG_NAME := luci-app-mwan6-npt
+PROJECT_VERSION ?=
+GIT_TAG := $(strip $(shell git describe --tags --match 'v*' --abbrev=0 2>/dev/null || true))
+PKG_VERSION := $(strip $(if $(PROJECT_VERSION),$(PROJECT_VERSION),$(if $(GIT_TAG),$(patsubst v%,%,$(GIT_TAG)),1.0.0)))
+PKG_RELEASE ?= 1
+
+OUTPUT_DIR ?= dist
+WORK_DIR := build/ipk
+DATA_DIR := $(WORK_DIR)/data
+CONTROL_DIR := $(WORK_DIR)/control
+
+IPK_FILENAME := $(PKG_NAME)_$(PKG_VERSION)-$(PKG_RELEASE)_all.ipk
+IPK_PATH := $(OUTPUT_DIR)/$(IPK_FILENAME)
+
+.PHONY: all ipk apk clean test
+
+all: ipk apk
+
+apk:
+> @chmod +x scripts/build-apk-mkpkg.sh
+> PROJECT_VERSION="$(PKG_VERSION)" PKG_RELEASE="$(PKG_RELEASE)" ./scripts/build-apk-mkpkg.sh
+
+test:
+> @if [ -d tests ]; then bash tests/check_structure.sh; else echo "tests/ missing"; fi
+
+ipk: $(IPK_PATH)
+
+$(IPK_PATH): htdocs/luci-static/resources/view/mwan6-npt/network/globals.js \
+	htdocs/luci-static/resources/view/mwan6-npt/network/interface.js \
+	htdocs/luci-static/resources/view/mwan6-npt/status/overview.js \
+	root/usr/share/luci/menu.d/luci-app-mwan6-npt.json \
+	root/usr/share/rpcd/acl.d/luci-app-mwan6-npt.json \
+	root/etc/uci-defaults/60_luci-mwan6-npt
+> @echo "Building IPK $(PKG_NAME) $(PKG_VERSION)-$(PKG_RELEASE)..."
+> rm -rf $(WORK_DIR)
+> mkdir -p $(DATA_DIR)/www/luci-static/resources/view/mwan6-npt/network
+> mkdir -p $(DATA_DIR)/www/luci-static/resources/view/mwan6-npt/status
+> mkdir -p $(DATA_DIR)/usr/share/luci/menu.d
+> mkdir -p $(DATA_DIR)/usr/share/rpcd/acl.d
+> mkdir -p $(DATA_DIR)/etc/uci-defaults
+> cp -a htdocs/luci-static/resources/view/mwan6-npt/network/*.js $(DATA_DIR)/www/luci-static/resources/view/mwan6-npt/network/
+> cp -a htdocs/luci-static/resources/view/mwan6-npt/status/*.js $(DATA_DIR)/www/luci-static/resources/view/mwan6-npt/status/
+> install -m 0644 root/usr/share/luci/menu.d/luci-app-mwan6-npt.json $(DATA_DIR)/usr/share/luci/menu.d/
+> install -m 0644 root/usr/share/rpcd/acl.d/luci-app-mwan6-npt.json $(DATA_DIR)/usr/share/rpcd/acl.d/
+> install -m 0755 root/etc/uci-defaults/60_luci-mwan6-npt $(DATA_DIR)/etc/uci-defaults/
+> mkdir -p $(CONTROL_DIR)
+> printf 'Package: %s\n' $(PKG_NAME) > $(CONTROL_DIR)/control
+> printf 'Version: %s-%s\n' $(PKG_VERSION) $(PKG_RELEASE) >> $(CONTROL_DIR)/control
+> printf 'Architecture: all\n' >> $(CONTROL_DIR)/control
+> printf 'Section: luci\n' >> $(CONTROL_DIR)/control
+> printf 'Priority: optional\n' >> $(CONTROL_DIR)/control
+> printf 'Maintainer: OpenWrt Community\n' >> $(CONTROL_DIR)/control
+> printf 'Depends: luci-base, mwan6-npt\n' >> $(CONTROL_DIR)/control
+> printf 'Description: LuCI web interface for mwan6-npt NPTv6 Multi-WAN.\n' >> $(CONTROL_DIR)/control
+> printf '#!/bin/sh\n[ -n "$${IPKG_INSTROOT}" ] || { rm -f /tmp/luci-indexcache.*; rm -rf /tmp/luci-modulecache/; /etc/init.d/rpcd reload 2>/dev/null; exit 0; }\n' > $(CONTROL_DIR)/postinst
+> chmod 0755 $(CONTROL_DIR)/postinst
+> tar -C $(DATA_DIR) -czf $(WORK_DIR)/data.tar.gz .
+> tar -C $(CONTROL_DIR) -czf $(WORK_DIR)/control.tar.gz control postinst
+> printf '2.0\n' > $(WORK_DIR)/debian-binary
+> mkdir -p $(OUTPUT_DIR)
+> rm -f $(IPK_PATH)
+> (cd $(WORK_DIR) && ar rcs $(abspath $(IPK_PATH)) debian-binary control.tar.gz data.tar.gz)
+> @echo "Package built: $(IPK_PATH)"
+
+clean:
+> rm -rf build/ipk build/sdk $(OUTPUT_DIR)

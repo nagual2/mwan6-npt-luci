@@ -24,58 +24,75 @@ Dieses Paket ergänzt **mwan6-npt** um eine LuCI-Administration (JavaScript). Gl
 - OpenWrt 22.03+ mit LuCI (js, `luci-base`)
 - Installiertes Paket **[mwan6-npt](https://github.com/nagual2/mwan6-npt)**
 
-## Build (OpenWrt SDK / Image Builder)
+## Installation aus Release
 
-1. Dieses Verzeichnis in den Build einbinden, z. B. Symlink in den LuCI-Feed:
+Dateien: [GitHub Releases](https://github.com/nagual2/mwan6-npt-luci/releases).
+
+### OpenWrt 25.12 und neuer (`apk`)
+
+Zuerst **mwan6-npt** installieren, dann dieses LuCI-Paket:
+
+```bash
+cd /tmp
+wget https://github.com/nagual2/mwan6-npt-luci/releases/download/v1.0.0/luci-app-mwan6-npt-1.0.0-r1.apk
+apk add --allow-untrusted ./luci-app-mwan6-npt-*.apk
+/etc/init.d/rpcd restart
+/etc/init.d/uhttpd restart
+```
+
+Optional Russisch: Build mit OpenWrt SDK und `CONFIG_LUCI_LANG_ru=y`.
+
+### OpenWrt 23.x (`opkg` / `.ipk`)
+
+```bash
+opkg install /tmp/luci-app-mwan6-npt_1.0.0-1_all.ipk
+/etc/init.d/rpcd restart
+/etc/init.d/uhttpd restart
+```
+
+### OpenWrt 25.x Fallback (Tarball aus IPK)
+
+Auf dem Build-Rechner:
+
+```bash
+make -f Makefile.build ipk
+./scripts/install-tarball.sh 192.168.1.1
+```
+
+In der Admin-Oberfläche: **Netzwerk → NPTv6 Multi-WAN**.
+
+## Standalone-Pakete bauen
+
+```bash
+make -f Makefile.build ipk PROJECT_VERSION=1.0.0
+chmod +x scripts/build-apk-mkpkg.sh
+./scripts/build-apk-mkpkg.sh
+ls dist/
+```
+
+## Build (OpenWrt SDK)
+
+1. Symlink in den LuCI-Feed:
 
    ```bash
    ln -sf /path/to/mwan6-npt-luci $TOPDIR/feeds/luci/applications/luci-app-mwan6-npt
    ```
 
-2. Sicherstellen, dass **mwan6-npt** in `package/` oder einem anderen Feed verfügbar ist.
+2. **mwan6-npt** muss im Build-Baum verfügbar sein.
 
-3. In `make menuconfig`: **LuCI → Applications → luci-app-mwan6-npt**, dann:
+3. `make menuconfig` → **LuCI → Applications → luci-app-mwan6-npt**, dann:
 
    ```bash
    make package/luci-app-mwan6-npt/compile V=s
    ```
 
-Liegt der LuCI-Feed nicht unter `feeds/luci`, `LUCI_DIR` angeben:
-
-```bash
-make package/luci-app-mwan6-npt/compile LUCI_DIR=/path/to/luci V=s
-```
-
-## Installation auf einem laufenden Router
-
-```bash
-opkg install luci-app-mwan6-npt_*.ipk
-# oder unter OpenWrt 24+ mit apk:
-apk add luci-app-mwan6-npt
-```
-
-LuCI neu laden (bzw. rpcd-Cache leeren):
-
-```bash
-/etc/init.d/rpcd restart
-/etc/init.d/uhttpd restart
-```
-
-In der Admin-Oberfläche: **Netzwerk → NPTv6 Multi-WAN**.
-
 ## Manuelle Installation (Entwicklung)
 
-Inhalt von `htdocs/` und `root/` auf das laufende System kopieren (Pfade entsprechen dem OpenWrt-Paketlayout), danach `rpcd` und `uhttpd` wie oben neu starten.
+Inhalt von `htdocs/` und `root/` kopieren, `rpcd` und `uhttpd` neu starten.
 
 ## UCI-Zuordnung
 
-Die LuCI-Formulare bearbeiten dieselbe UCI-Datei wie die CLI. Details in der [mwan6-npt-Dokumentation](https://github.com/nagual2/mwan6-npt):
-
-- Abschnitt `globals` → Option `enabled`
-- Abschnitt `interface '<name>'` → `enabled`, `wan_prefix`, `default`
-- Abschnittsname = Linux-Schnittstellenname (z. B. `lan`, `tb6`)
-
-Bei der Erstinstallation legt `root/etc/uci-defaults/60_luci-mwan6-npt` den Abschnitt `globals` an, falls er fehlt.
+Siehe [mwan6-npt-Dokumentation](https://github.com/nagual2/mwan6-npt): `globals.enabled`, Abschnittsname = Schnittstellenname, ein `default=1`.
 
 ## Lizenz
 

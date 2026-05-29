@@ -24,58 +24,75 @@
 - OpenWrt 22.03+ с LuCI (`luci-base`)
 - Установленный пакет **[mwan6-npt](https://github.com/nagual2/mwan6-npt)**
 
+## Установка из релиза
+
+Файлы: [GitHub Releases](https://github.com/nagual2/mwan6-npt-luci/releases).
+
+### OpenWrt 25.12 и новее (`apk`)
+
+Сначала установите **mwan6-npt**, затем LuCI-пакет:
+
+```bash
+cd /tmp
+wget https://github.com/nagual2/mwan6-npt-luci/releases/download/v1.0.0/luci-app-mwan6-npt-1.0.0-r1.apk
+apk add --allow-untrusted ./luci-app-mwan6-npt-*.apk
+/etc/init.d/rpcd restart
+/etc/init.d/uhttpd restart
+```
+
+Русский UI (опционально): соберите через OpenWrt SDK с `CONFIG_LUCI_LANG_ru=y`; в standalone `.apk` строки меню на английском.
+
+### OpenWrt 23.x (`opkg` / `.ipk`)
+
+```bash
+opkg install /tmp/luci-app-mwan6-npt_1.0.0-1_all.ipk
+/etc/init.d/rpcd restart
+/etc/init.d/uhttpd restart
+```
+
+### OpenWrt 25.x — запасной способ (tarball из IPK)
+
+На машине сборки:
+
+```bash
+make -f Makefile.build ipk
+./scripts/install-tarball.sh 192.168.1.1
+```
+
+В админке: **Сеть → NPTv6 Multi-WAN**.
+
+## Сборка standalone-пакетов
+
+```bash
+make -f Makefile.build ipk PROJECT_VERSION=1.0.0
+chmod +x scripts/build-apk-mkpkg.sh
+./scripts/build-apk-mkpkg.sh
+ls dist/
+```
+
 ## Сборка (OpenWrt SDK)
 
-1. Добавьте каталог в feed LuCI:
+1. Симлинк в feed LuCI:
 
    ```bash
    ln -sf /path/to/mwan6-npt-luci $TOPDIR/feeds/luci/applications/luci-app-mwan6-npt
    ```
 
-2. Убедитесь, что пакет **mwan6-npt** доступен в дереве сборки.
+2. Пакет **mwan6-npt** должен быть в дереве сборки.
 
-3. В `make menuconfig`: **LuCI → Applications → luci-app-mwan6-npt**, затем:
+3. `make menuconfig` → **LuCI → Applications → luci-app-mwan6-npt**, затем:
 
    ```bash
    make package/luci-app-mwan6-npt/compile V=s
    ```
 
-При другом пути к LuCI:
-
-```bash
-make package/luci-app-mwan6-npt/compile LUCI_DIR=/path/to/luci V=s
-```
-
-## Установка на роутер
-
-```bash
-opkg install luci-app-mwan6-npt_*.ipk
-# или на OpenWrt 24+ с apk:
-apk add luci-app-mwan6-npt
-```
-
-Перезапуск LuCI:
-
-```bash
-/etc/init.d/rpcd restart
-/etc/init.d/uhttpd restart
-```
-
-В админке: **Сеть → NPTv6 Multi-WAN**.
-
 ## Ручная установка (разработка)
 
-Скопируйте содержимое `htdocs/` и `root/` на роутер (пути совпадают с layout пакета OpenWrt), затем перезапустите `rpcd` и `uhttpd`.
+Скопируйте `htdocs/` и `root/` на роутер, перезапустите `rpcd` и `uhttpd`.
 
 ## Соответствие UCI
 
-Формы LuCI редактируют тот же UCI, что и CLI. Подробнее — в [документации mwan6-npt](https://github.com/nagual2/mwan6-npt):
-
-- Секция `globals` → опция `enabled`
-- Секция `interface '<имя>'` → `enabled`, `wan_prefix`, `default`
-- Имя секции = имя Linux-интерфейса (например `lan`, `tb6`)
-
-При первой установке `root/etc/uci-defaults/60_luci-mwan6-npt` создаёт секцию `globals`, если её ещё нет.
+См. [документацию mwan6-npt](https://github.com/nagual2/mwan6-npt): `globals.enabled`, имя секции = имя интерфейса, один `default=1`.
 
 ## Лицензия
 
