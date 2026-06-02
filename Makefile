@@ -10,7 +10,7 @@ LUCI_DEPENDS:=+luci-base +mwan6-npt
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE NOTICE
 PKG_MAINTAINER:=OpenWrt Community
-PKG_VERSION?=1.2.1
+PKG_VERSION?=1.2.2
 PKG_RELEASE?=1
 
 # When this package lives outside the luci feed tree, set LUCI_DIR, e.g.:
