@@ -40,6 +40,8 @@ apk add --allow-untrusted ./luci-app-mwan6-npt-*.apk
 /etc/init.d/uhttpd restart
 ```
 
+Команда **закрепляет (pin)** пакет в `/etc/apk/world`. Проверка: `grep luci-app-mwan6-npt /etc/apk/world`. Подробно: [luci-app-mwan3 — Pinning](https://github.com/nagual2/luci-app-mwan3#pinning-the-nagual2-fork-apk).
+
 Русский UI: установите пакет **[luci-i18n-mwan6-npt-ru](https://github.com/nagual2/luci-i18n-mwan6-npt-ru)** (отдельный репозиторий) или соберите через OpenWrt SDK с `CONFIG_LUCI_LANG_ru=y`. В standalone `.apk` приложения без i18n-пакета строки меню на английском.
 
 ### OpenWrt 23.x (`opkg` / `.ipk`)
@@ -93,6 +95,14 @@ ls dist/
 ## Соответствие UCI
 
 См. [документацию mwan6-npt](https://github.com/nagual2/mwan6-npt): `globals.enabled`, имя секции = имя интерфейса, один `default=1`.
+
+## Связанные пакеты
+
+| Пакет | Репозиторий |
+|-------|-------------|
+| mwan3 (fork) | [nagual2/mwan3](https://github.com/nagual2/mwan3) |
+| luci-app-mwan3 | [nagual2/luci-app-mwan3](https://github.com/nagual2/luci-app-mwan3) |
+| mwan6-npt | [nagual2/mwan6-npt](https://github.com/nagual2/mwan6-npt) |
 
 ## Документация
 

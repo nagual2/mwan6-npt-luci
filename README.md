@@ -40,6 +40,8 @@ apk add --allow-untrusted ./luci-app-mwan6-npt-*.apk
 /etc/init.d/uhttpd restart
 ```
 
+This command **pins** the package in `/etc/apk/world` (`luci-app-mwan6-npt><Q1hash…`). Verify with `grep luci-app-mwan6-npt /etc/apk/world` and `apk policy luci-app-mwan6-npt`. Details: [luci-app-mwan3 — Pinning](https://github.com/nagual2/luci-app-mwan3#pinning-the-nagual2-fork-apk).
+
 Optional Russian UI: build with OpenWrt SDK and `CONFIG_LUCI_LANG_ru=y`, or use English menu strings from `po/ru/`.
 
 ### OpenWrt 23.x (`opkg` / `.ipk`)
@@ -108,6 +110,14 @@ The LuCI forms edit the same UCI file as the CLI. See [mwan6-npt documentation](
 - Section name must match the Linux interface name (e.g. `lan`, `tb6`)
 
 On first install, `root/etc/uci-defaults/60_luci-mwan6-npt` creates the `globals` section if it is missing.
+
+## Related packages
+
+| Package | Repository |
+|---------|------------|
+| mwan3 (fork) | [nagual2/mwan3](https://github.com/nagual2/mwan3) |
+| luci-app-mwan3 | [nagual2/luci-app-mwan3](https://github.com/nagual2/luci-app-mwan3) |
+| mwan6-npt | [nagual2/mwan6-npt](https://github.com/nagual2/mwan6-npt) |
 
 ## Documentation
 

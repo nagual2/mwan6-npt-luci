@@ -40,6 +40,8 @@ apk add --allow-untrusted ./luci-app-mwan6-npt-*.apk
 /etc/init.d/uhttpd restart
 ```
 
+**Pin** in `/etc/apk/world` — Details: [luci-app-mwan3 — Pinning](https://github.com/nagual2/luci-app-mwan3#pinning-the-nagual2-fork-apk).
+
 Optional Russisch: Build mit OpenWrt SDK und `CONFIG_LUCI_LANG_ru=y`.
 
 ### OpenWrt 23.x (`opkg` / `.ipk`)
@@ -93,6 +95,14 @@ Inhalt von `htdocs/` und `root/` kopieren, `rpcd` und `uhttpd` neu starten.
 ## UCI-Zuordnung
 
 Siehe [mwan6-npt-Dokumentation](https://github.com/nagual2/mwan6-npt): `globals.enabled`, Abschnittsname = Schnittstellenname, ein `default=1`.
+
+## Verwandte Pakete
+
+| Paket | Repository |
+|-------|------------|
+| mwan3 (Fork) | [nagual2/mwan3](https://github.com/nagual2/mwan3) |
+| luci-app-mwan3 | [nagual2/luci-app-mwan3](https://github.com/nagual2/luci-app-mwan3) |
+| mwan6-npt | [nagual2/mwan6-npt](https://github.com/nagual2/mwan6-npt) |
 
 ## Dokumentation
 
